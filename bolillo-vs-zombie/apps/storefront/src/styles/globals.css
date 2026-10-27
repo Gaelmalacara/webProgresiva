@@ -110,3 +110,29 @@
     @apply text-[32px] leading-[44px] font-semibold;
   }
 }
+
+/* Paleta principal de Bolillo vs Zombie */
+@layer base {
+  :root {
+    --zombie-bg: #0c0e0b;
+    --zombie-surface: #171a14;
+    --zombie-surface-hover: #1a1d17;
+    --zombie-border: #34372e;
+    --zombie-accent: #a8b38a;
+    --zombie-accent-hover: #bdc8a0;
+    --zombie-text: #f2f1e9;
+    --zombie-text-muted: #a5a69f;
+    --zombie-text-subtle: #777a70;
+  }
+
+  body {
+    background-color: var(--zombie-bg);
+    color: var(--zombie-text);
+  }
+
+  ::selection {
+    background-color: var(--zombie-accent);
+    color: var(--zombie-bg);
+  }
+}
+

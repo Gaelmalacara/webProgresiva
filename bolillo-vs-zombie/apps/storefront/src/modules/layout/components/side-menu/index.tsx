@@ -13,10 +13,12 @@ import { Locale } from "@lib/data/locales"
 
 
 const SideMenuItems = {
-  Home: "/",
-  Store: "/store",
-  Account: "/account",
-  Cart: "/cart",
+  Inicio: "/",
+  Tienda: "/store",
+  Nosotros: "/account",
+  WorkShop: "/cart",
+  Arte: "/",
+  perfil: "/perfil",
 }
 
 type SideMenuProps = {
@@ -38,7 +40,7 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
               <div className="relative flex h-full">
                 <Popover.Button
                   data-testid="nav-menu-button"
-                  className="relative h-full flex items-center transition-all ease-out duration-200 focus:outline-none hover:text-ui-fg-base"
+                  className="relative h-full flex items-center transition-all ease-out duration-200 focus:outline-none hover:text-[#a8b38a] transition-colors duration-200"
                 >
                   Menu
                 </Popover.Button>
@@ -81,6 +83,11 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                               className="text-3xl leading-10 hover:text-ui-fg-disabled"
                               onClick={close}
                               data-testid={`${name.toLowerCase()}-link`}
+                              data-analytics-event={
+                                name === "Tienda"
+                                  ? "side_menu_store_click"
+                                  : undefined
+                              }
                             >
                               {name}
                             </LocalizedClientLink>

@@ -18,7 +18,7 @@ export default async function Nav() {
 
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
-      <header className="relative h-16 mx-auto border-b duration-200 bg-white border-ui-border-base">
+      <header className="relative h-16 mx-auto border-b border-[#34372e] duration-200 bg-[#171a14] text-[#f2f1e9]">
         <nav className="content-container txt-xsmall-plus text-ui-fg-subtle flex items-center justify-between w-full h-full text-small-regular">
           <div className="flex-1 basis-0 h-full flex items-center">
             <div className="h-full">
@@ -29,10 +29,11 @@ export default async function Nav() {
           <div className="flex items-center h-full">
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
+              className="txt-compact-xlarge-plus hover:text-[#a8b38a] transition-colors duration-200"
               data-testid="nav-store-link"
+              data-analytics-event="nav_home_click"
             >
-              Medusa Store
+              BOLILLO VS ZOMBIE
             </LocalizedClientLink>
           </div>
 
@@ -40,7 +41,7 @@ export default async function Nav() {
             <Search />
             <div className="hidden small:flex items-center gap-x-6 h-full">
               <LocalizedClientLink
-                className="hover:text-ui-fg-base"
+                className="hover:text-[#a8b38a] transition-colors duration-200"
                 href="/account"
                 data-testid="nav-account-link"
               >

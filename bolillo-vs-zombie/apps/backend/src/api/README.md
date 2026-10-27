@@ -133,3 +133,29 @@ export default defineMiddlewares({
 ```
 
 The `matcher` property can be either a string or a regular expression. The `middlewares` property accepts an array of middleware functions.
+
+## Analytics API
+
+The storefront sends allowlisted events to `POST /store/analytics/events`. The
+backend validates the event name, local pathname, and anonymous UUIDs, applies
+a per-session in-process rate limit, and uses the client-generated `event_id`
+as an idempotency key. A repeated event returns `created: false` and does not
+create a second row. The rate limiter is local to each backend process; use a
+shared limiter if the backend is deployed with multiple instances.
+
+The event model is registered as the `analytics` module. Generate and apply its
+database migration from `apps/backend`:
+
+```bash
+npx medusa db:generate analytics
+npx medusa db:migrate
+```
+
+`GET /admin/analytics` requires an authenticated Medusa admin user. It returns
+the total event count, counts by event name, and page views by pathname. The
+optional `from` and `to` query parameters accept date strings and may cover up
+to 90 days; the default window is the last 30 days.
+
+The public event payload deliberately excludes arbitrary metadata and personal
+fields. The visitor ID is persisted in browser local storage and the session ID
+in session storage; neither reuses the storefront's `_medusa_cache_id`.
