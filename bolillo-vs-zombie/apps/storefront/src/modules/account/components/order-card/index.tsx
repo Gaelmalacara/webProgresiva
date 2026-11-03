@@ -24,13 +24,13 @@ const OrderCard = ({ order }: OrderCardProps) => {
   }, [order])
 
   return (
-    <div className="bg-white flex flex-col" data-testid="order-card">
+    <div className="flex flex-col" data-testid="order-card">
       <div className="uppercase text-large-semi mb-1">
         #<span data-testid="order-display-id">{order.display_id}</span>
       </div>
-      <div className="flex items-center divide-x divide-gray-200 text-small-regular text-ui-fg-base">
+      <div className="flex items-center divide-x divide-[#34372e] text-small-regular text-[#a5a69f]">
         <span className="pr-2" data-testid="order-created-at">
-          {new Date(order.created_at).toDateString()}
+          {new Date(order.created_at).toLocaleDateString("es-MX")}
         </span>
         <span className="px-2" data-testid="order-amount">
           {convertToLocale({
@@ -39,7 +39,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
           })}
         </span>
         <span className="pl-2">{`${numberOfLines} ${
-          numberOfLines > 1 ? "items" : "item"
+          numberOfLines === 1 ? "artículo" : "artículos"
         }`}</span>
       </div>
       <div className="grid grid-cols-2 small:grid-cols-4 gap-4 my-4">
@@ -51,9 +51,9 @@ const OrderCard = ({ order }: OrderCardProps) => {
               data-testid="order-item"
             >
               <Thumbnail thumbnail={i.thumbnail} images={[]} size="full" />
-              <div className="flex items-center text-small-regular text-ui-fg-base">
+              <div className="flex items-center text-small-regular text-[#f2f1e9]">
                 <span
-                  className="text-ui-fg-base font-semibold"
+                  className="text-[#f2f1e9] font-semibold"
                   data-testid="item-title"
                 >
                   {i.title}
@@ -64,19 +64,19 @@ const OrderCard = ({ order }: OrderCardProps) => {
             </div>
           )
         })}
-        {numberOfProducts > 4 && (
+        {numberOfProducts > 3 && (
           <div className="w-full h-full flex flex-col items-center justify-center">
-            <span className="text-small-regular text-ui-fg-base">
-              + {numberOfLines - 4}
+            <span className="text-small-regular text-[#a5a69f]">
+              + {numberOfProducts - 3}
             </span>
-            <span className="text-small-regular text-ui-fg-base">more</span>
+            <span className="text-small-regular text-[#a5a69f]">más</span>
           </div>
         )}
       </div>
       <div className="flex justify-end">
         <LocalizedClientLink href={`/account/orders/details/${order.id}`}>
           <Button data-testid="order-details-link" variant="secondary">
-            See details
+            Ver compra
           </Button>
         </LocalizedClientLink>
       </div>
