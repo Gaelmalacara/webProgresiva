@@ -11,7 +11,7 @@ A widget is a React component that can be injected into an existing page in the 
 For example, create the file `src/admin/widgets/product-widget.tsx` with the following content:
 
 ```tsx title="src/admin/widgets/product-widget.tsx"
-import { defineWidgetConfig } from "@medusajs/admin-sdk"
+import { defineWidgetConfig } from "@medusajs/admin-sdk";
 
 // The widget
 const ProductWidget = () => {
@@ -19,15 +19,15 @@ const ProductWidget = () => {
     <div>
       <h2>Product Widget</h2>
     </div>
-  )
-}
+  );
+};
 
 // The widget's configurations
 export const config = defineWidgetConfig({
   zone: "product.details.after",
-})
+});
 
-export default ProductWidget
+export default ProductWidget;
 ```
 
 This inserts a widget with the text “Product Widget” at the end of a product’s details page.
@@ -39,11 +39,11 @@ sidebar. It reads the authenticated `GET /admin/analytics` endpoint and shows
 the totals already recorded by the storefront analytics module; it does not
 change that module or its database schema.
 
-Medusa's dashboard includes Spanish translations. Each administrator selects
-**Español** in Settings > Profile. Project-specific page labels and translations
-are in `src/admin/i18n`.
+Medusa's dashboard includes Spanish translations. `medusa-config.ts` sets the
+Admin language to Spanish on every page load, including the built-in dashboard
+and project-specific labels in `src/admin/i18n`.
 
-The built-in sidebar can be customized per administrator. Use the dashboard's
-**Customize layout > Customize sidebar** action to hide the other top-level
-sections and keep **Users** and **Statistics** visible. The preference is
-per-admin; this project does not remove Medusa's built-in commerce routes.
+The Admin shell keeps **Usuarios** and **Estadísticas** visible in the sidebar
+and hides the other top-level entries and the Settings shortcut. This is a
+navigation-only change: Medusa's built-in commerce routes and permissions are
+preserved and can still be reached directly by authorized administrators.
