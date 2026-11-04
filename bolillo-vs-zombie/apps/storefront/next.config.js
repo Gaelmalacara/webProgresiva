@@ -2,6 +2,9 @@ const checkEnvVariables = require("./check-env-variables")
 
 checkEnvVariables()
 
+const reactPath = require.resolve("react", { paths: [__dirname] })
+const reactDomPath = require.resolve("react-dom", { paths: [__dirname] })
+
 /**
  * Medusa Cloud-related environment variables
  */
@@ -14,16 +17,11 @@ const S3_PATHNAME = process.env.MEDUSA_CLOUD_S3_PATHNAME
 const nextConfig = {
   reactStrictMode: true,
   devIndicators: false,
+  transpilePackages: ["@medusajs/icons"],
   logging: {
     fetches: {
-      fullUrl: true,
+      fullUrl: false,
     },
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
   },
   images: {
     unoptimized: true,
@@ -50,6 +48,27 @@ const nextConfig = {
           ]
         : []),
     ],
+  },
+  webpack: (config) => {
+    config.resolve.alias = {
+        ...config.resolve.alias,
+        "react$": reactPath,
+        "react/jsx-runtime$": require.resolve("react/jsx-runtime", {
+          paths: [__dirname],
+        }),
+        "react/jsx-dev-runtime$": require.resolve("react/jsx-dev-runtime", {
+          paths: [__dirname],
+        }),
+        "react-dom$": reactDomPath,
+        "react-dom/client$": require.resolve("react-dom/client", {
+          paths: [__dirname],
+        }),
+        "react-dom/server$": require.resolve("react-dom/server", {
+          paths: [__dirname],
+        }),
+    }
+
+    return config
   },
 }
 

@@ -1,0 +1,10 @@
+{
+  "build": {
+    "buildCommand": "npm run build --workspace=@dtc/storefront"
+  },
+  "deploy": {
+    "startCommand": "npm run start --workspace=@dtc/storefront",
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  }
+}

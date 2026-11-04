@@ -8,11 +8,13 @@
     "medusa-storefront"
   ],
   "scripts": {
-    "dev": "next dev --turbopack -p 8000",
-    "build": "next build",
-    "start": "next start -p 8000",
+    "dev": "node ./scripts/run-next.js dev --turbopack -p 8000",
+    "build": "node ./scripts/run-next.js build",
+    "prestart": "node ./check-production-env.js",
+    "start": "node ./scripts/run-next.js start --hostname 0.0.0.0",
     "lint": "next lint",
-    "analyze": "ANALYZE=true next build"
+    "typecheck": "tsc --noEmit",
+    "analyze": "ANALYZE=true node ./scripts/run-next.js build"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",

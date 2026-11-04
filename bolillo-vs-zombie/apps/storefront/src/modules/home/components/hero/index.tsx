@@ -1,4 +1,4 @@
-import { Button, Heading } from "@modules/common/components/ui";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -46,7 +46,7 @@ const Hero = () => {
           </p>
 
           {/* Botón principal */}
-          <a
+          <Link
             href="/"
             data-analytics-event="hero_enter_shelter_click"
             className="group inline-flex items-center gap-4 bg-[#a8b38a] px-6 py-4 text-sm font-black uppercase tracking-wide text-[#10120e] transition hover:bg-[#bdc8a0]"
@@ -55,7 +55,7 @@ const Hero = () => {
             <span className="text-lg transition-transform group-hover:translate-x-1">
               →
             </span>
-          </a>
+          </Link>
 
           {/* Características */}
           <div className="mt-10 grid w-full max-w-lg grid-cols-3 border-y border-[#34382c] py-5">

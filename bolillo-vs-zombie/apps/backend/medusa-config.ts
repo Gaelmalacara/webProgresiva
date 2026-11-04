@@ -2,16 +2,57 @@ import { loadEnv, defineConfig } from "@medusajs/framework/utils";
 
 loadEnv(process.env.NODE_ENV || "development", process.cwd());
 
+const isProduction = process.env.NODE_ENV === "production";
+const redisUrl = process.env.REDIS_URL;
+
+if (isProduction && !redisUrl) {
+  console.error("REDIS_URL is required when NODE_ENV=production.");
+  process.exit(1);
+}
+
+const productionRedisModules = isProduction
+  ? [
+      {
+        resolve: "@medusajs/medusa/event-bus-redis",
+        options: { redisUrl },
+      },
+      {
+        resolve: "@medusajs/medusa/workflow-engine-redis",
+        options: { redis: { redisUrl } },
+      },
+      {
+        resolve: "@medusajs/medusa/caching",
+        options: {
+          providers: [
+            {
+              resolve: "@medusajs/caching-redis",
+              id: "caching-redis",
+              is_default: true,
+              options: { redisUrl, prefix: "bolillo:cache:" },
+            },
+          ],
+        },
+      },
+      {
+        resolve: "@medusajs/medusa/locking",
+        options: {
+          providers: [
+            {
+              resolve: "@medusajs/medusa/locking-redis",
+              id: "locking-redis",
+              is_default: true,
+              options: { redisUrl, namespace: "bolillo:lock:" },
+            },
+          ],
+        },
+      },
+    ]
+  : [];
+
 module.exports = defineConfig({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
-    databaseDriverOptions: {
-      connection: {
-        ssl: {
-          rejectUnauthorized: false,
-        },
-      },
-    },
+    ...(isProduction ? { redisUrl, redisPrefix: "bolillo:" } : {}),
     http: {
       storeCors: process.env.STORE_CORS!,
       adminCors: process.env.ADMIN_CORS!,
@@ -48,6 +89,7 @@ module.exports = defineConfig({
     }),
   },
   modules: [
+    ...productionRedisModules,
     {
       resolve: "./src/modules/analytics",
     },

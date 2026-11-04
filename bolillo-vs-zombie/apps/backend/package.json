@@ -14,8 +14,11 @@
   ],
   "scripts": {
     "build": "medusa build",
-    "start": "medusa start",
+    "prestart": "node ./scripts/validate-production-env.js",
+    "start": "node ./scripts/start.js",
     "dev": "medusa develop",
+    "migrate": "medusa db:migrate",
+    "typecheck": "tsc --noEmit",
     "lint": "medusa lint",
     "test:integration:http": "TEST_TYPE=integration:http NODE_OPTIONS=--experimental-vm-modules jest --silent=false --runInBand --forceExit",
     "test:integration:modules": "TEST_TYPE=integration:modules NODE_OPTIONS=--experimental-vm-modules jest --silent=false --runInBand --forceExit",

@@ -59,9 +59,15 @@ export function trackAnalyticsEvent(
   eventName: AnalyticsEventName,
   path = window.location.pathname
 ) {
-  const backendUrl =
-    process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000"
+  const backendUrl = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL
   const publishableKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
+
+  if (!backendUrl) {
+    console.error(
+      "Analytics events cannot be sent without a Medusa backend URL."
+    )
+    return
+  }
 
   if (!publishableKey) {
     console.error("Analytics events cannot be sent without a publishable API key.")

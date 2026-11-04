@@ -278,7 +278,7 @@ export async function applyPromotions(codes: string[]) {
     .catch(medusaError)
 }
 
-export async function applyGiftCard(code: string) {
+export async function applyGiftCard(_code: string) {
   //   const cartId = getCartId()
   //   if (!cartId) return "No cartId cookie found"
   //   try {
@@ -290,7 +290,7 @@ export async function applyGiftCard(code: string) {
   //   }
 }
 
-export async function removeDiscount(code: string) {
+export async function removeDiscount(_code: string) {
   // const cartId = getCartId()
   // if (!cartId) return "No cartId cookie found"
   // try {
@@ -302,8 +302,8 @@ export async function removeDiscount(code: string) {
 }
 
 export async function removeGiftCard(
-  codeToRemove: string,
-  giftCards: any[]
+  _codeToRemove: string,
+  _giftCards: unknown[]
   // giftCards: GiftCard[]
 ) {
   //   const cartId = getCartId()
@@ -328,8 +328,8 @@ export async function submitPromotionForm(
   const code = formData.get("code") as string
   try {
     await applyPromotions([code])
-  } catch (e: any) {
-    return e.message
+  } catch (e: unknown) {
+    return e instanceof Error ? e.message : String(e)
   }
 }
 
@@ -344,41 +344,46 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
       throw new Error("No existing cart found when setting addresses")
     }
 
+    const formString = (name: string) => {
+      const value = formData.get(name)
+      return typeof value === "string" ? value : null
+    }
+
     const data = {
       shipping_address: {
-        first_name: formData.get("shipping_address.first_name"),
-        last_name: formData.get("shipping_address.last_name"),
-        address_1: formData.get("shipping_address.address_1"),
+        first_name: formString("shipping_address.first_name"),
+        last_name: formString("shipping_address.last_name"),
+        address_1: formString("shipping_address.address_1"),
         address_2: "",
-        company: formData.get("shipping_address.company"),
-        postal_code: formData.get("shipping_address.postal_code"),
-        city: formData.get("shipping_address.city"),
-        country_code: formData.get("shipping_address.country_code"),
-        province: formData.get("shipping_address.province"),
-        phone: formData.get("shipping_address.phone"),
+        company: formString("shipping_address.company"),
+        postal_code: formString("shipping_address.postal_code"),
+        city: formString("shipping_address.city"),
+        country_code: formString("shipping_address.country_code"),
+        province: formString("shipping_address.province"),
+        phone: formString("shipping_address.phone"),
       },
-      email: formData.get("email"),
-    } as any
+      email: formString("email"),
+    } as HttpTypes.StoreUpdateCart
 
     const sameAsBilling = formData.get("same_as_billing")
     if (sameAsBilling === "on") data.billing_address = data.shipping_address
 
     if (sameAsBilling !== "on")
       data.billing_address = {
-        first_name: formData.get("billing_address.first_name"),
-        last_name: formData.get("billing_address.last_name"),
-        address_1: formData.get("billing_address.address_1"),
+        first_name: formString("billing_address.first_name"),
+        last_name: formString("billing_address.last_name"),
+        address_1: formString("billing_address.address_1"),
         address_2: "",
-        company: formData.get("billing_address.company"),
-        postal_code: formData.get("billing_address.postal_code"),
-        city: formData.get("billing_address.city"),
-        country_code: formData.get("billing_address.country_code"),
-        province: formData.get("billing_address.province"),
-        phone: formData.get("billing_address.phone"),
+        company: formString("billing_address.company"),
+        postal_code: formString("billing_address.postal_code"),
+        city: formString("billing_address.city"),
+        country_code: formString("billing_address.country_code"),
+        province: formString("billing_address.province"),
+        phone: formString("billing_address.phone"),
       }
     await updateCart(data)
-  } catch (e: any) {
-    return e.message
+  } catch (e: unknown) {
+    return e instanceof Error ? e.message : String(e)
   }
 
   redirect(
