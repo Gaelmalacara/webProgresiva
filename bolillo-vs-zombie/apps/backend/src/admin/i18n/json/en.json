@@ -1,0 +1,25 @@
+{
+  "analytics": {
+    "title": "Statistics",
+    "description": "Interactions recorded on the website.",
+    "period": "Period",
+    "lastDays": "Last {{count}} days",
+    "range": "From {{from}} to {{to}}",
+    "loadError": "Could not load statistics (HTTP {{status}}).",
+    "unknownError": "An unexpected error occurred while loading statistics.",
+    "loading": "Loading statistics...",
+    "totalEvents": "Recorded events",
+    "pageViews": "Page views",
+    "clicks": "Recorded clicks",
+    "eventsTitle": "Events by type",
+    "pagesTitle": "Most visited pages",
+    "noPageViews": "No page views were recorded in this period.",
+    "events": {
+      "page_view": "Page views",
+      "hero_enter_shelter_click": "Enter shelter clicks",
+      "side_menu_store_click": "Store menu clicks",
+      "nav_home_click": "Home clicks",
+      "product_add_to_cart_success": "Products added to cart"
+    }
+  }
+}

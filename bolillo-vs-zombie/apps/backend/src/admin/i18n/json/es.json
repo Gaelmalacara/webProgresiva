@@ -1,0 +1,28 @@
+{
+  "customers": {
+    "domain": "Usuarios"
+  },
+  "analytics": {
+    "title": "Estadísticas",
+    "description": "Interacciones registradas en el sitio web.",
+    "period": "Periodo",
+    "lastDays": "Últimos {{count}} días",
+    "range": "Del {{from}} al {{to}}",
+    "loadError": "No se pudieron cargar las estadísticas (HTTP {{status}}).",
+    "unknownError": "Ocurrió un error inesperado al cargar las estadísticas.",
+    "loading": "Cargando estadísticas...",
+    "totalEvents": "Eventos registrados",
+    "pageViews": "Visitas a páginas",
+    "clicks": "Clics registrados",
+    "eventsTitle": "Eventos por tipo",
+    "pagesTitle": "Páginas más visitadas",
+    "noPageViews": "No hay visitas registradas en este periodo.",
+    "events": {
+      "page_view": "Visitas a páginas",
+      "hero_enter_shelter_click": "Clics en «Entrar al refugio»",
+      "side_menu_store_click": "Clics en la tienda del menú",
+      "nav_home_click": "Clics en el inicio",
+      "product_add_to_cart_success": "Productos añadidos al carrito"
+    }
+  }
+}
